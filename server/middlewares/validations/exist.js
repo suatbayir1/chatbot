@@ -18,6 +18,8 @@ const isDirectoryExists = asyncErrorWrapper(async (req, res, next) => {
     );
   }
 
+  req.directory = exists;
+
   next();
 });
 

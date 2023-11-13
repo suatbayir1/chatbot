@@ -60,6 +60,48 @@ export const createDirectory = createAsyncThunk(
   }
 );
 
+export const updateDirectory = createAsyncThunk(
+  "knowledge/updateDirectory",
+  async (params: Object, { getState, dispatch }: ReduxType) => {
+    try {
+      const response = await axios.put(
+        getUrl(
+          `knowledge/${
+            getState().knowledge.activeDirectory._id
+          }/updateDirectory`
+        ),
+        params
+      );
+
+      if (response.status === 200) {
+        return response.data.data;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const deleteDirectory = createAsyncThunk(
+  "knowledge/deleteDirectory",
+  async (_: void, { getState, dispatch }: ReduxType) => {
+    try {
+      const response = await axios.delete(
+        getUrl(
+          `knowledge/${
+            getState().knowledge.activeDirectory._id
+          }/deleteDirectory`
+        )
+      );
+      console.log(response);
+      if (response.status === 200) {
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const knowledgeSlicer = createSlice({
   name: "knowledge",
   initialState,

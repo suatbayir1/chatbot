@@ -3,9 +3,11 @@
 /** Libraries */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 /** Helpers */
 import { getUrl } from "@/helpers/api";
+import { toast } from "@/helpers/view";
 
 // ** Types
 import { Dispatch } from "redux";
@@ -65,8 +67,13 @@ export const uploadDocument = createAsyncThunk(
         dispatch(getDocuments());
         return response.data.data;
       }
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      toast.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response.data.message,
+      });
+      return undefined;
     }
   }
 );

@@ -95,9 +95,8 @@ const CreateDocuments = (props: Props) => {
       dispatch(uploadDocument(payload))
         .then(unwrapResult)
         .then((result) => {
-          setTimeout(() => {
-            setFile(undefined);
-          }, 3000);
+          console.log({ result });
+          setFile(undefined);
         });
     }
   };

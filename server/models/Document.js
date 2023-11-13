@@ -25,16 +25,8 @@ const DocumentSchema = new Schema(
       required: [true, "Please provide a status"],
       enum: ["UPLOADED", "LEARNED", "TRANSFORMING"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: null,
-    },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 DocumentSchema.pre("save", async function (next) {

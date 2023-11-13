@@ -14,3 +14,4 @@ export { default as Options } from "@/components/conversation/Options";
 export { default as ChatHistory } from "@/components/conversation/ChatHistory";
 export { default as ChatQueryInput } from "@/components/conversation/ChatQueryInput";
 export { default as RenameConversation } from "@/components/conversation/RenameConversation";
+export { default as RenameDialog } from "@/components/shared/RenameDialog";

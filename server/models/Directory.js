@@ -8,10 +8,6 @@ const DirectorySchema = new Schema(
       type: String,
       required: [true, "Please provide a directory name"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
     documents: [
       {
         type: mongoose.Schema.ObjectId,
@@ -19,12 +15,8 @@ const DirectorySchema = new Schema(
         ref: "Document",
       },
     ],
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 module.exports = mongoose.model("Directory", DirectorySchema);

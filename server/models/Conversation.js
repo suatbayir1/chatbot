@@ -8,16 +8,8 @@ const ConversationSchema = new Schema(
       type: String,
       default: "",
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 module.exports = mongoose.model("Conversation", ConversationSchema);
