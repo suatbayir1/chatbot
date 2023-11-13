@@ -2,6 +2,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+/** Models */
+const Directory = require("./Directory");
+
 const DocumentSchema = new Schema(
   {
     directory: {
@@ -33,5 +36,17 @@ const DocumentSchema = new Schema(
   },
   { versionKey: false }
 );
+
+DocumentSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const directory = await Directory.findById(this.directory);
+    directory.documents.push(this._id);
+    await directory.save();
+
+    next();
+  } else {
+    next();
+  }
+});
 
 module.exports = mongoose.model("Document", DocumentSchema);

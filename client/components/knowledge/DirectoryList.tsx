@@ -16,7 +16,11 @@ import type { RootState } from "@/redux/store";
 import { setActiveDirectory } from "@/redux/features/knowledge/knowledgeSlice";
 import { useSelector, useDispatch } from "react-redux";
 
+/** Helpers */
+import { filterByKeyValue } from "@/helpers/filter";
+
 type Props = {
+  searchDirectoryTerm: string;
   directories: Directory[];
 };
 
@@ -29,7 +33,11 @@ const DirectoryList = (props: Props) => {
 
   return (
     <div className="m-5">
-      {props.directories.map((item: Directory, index: number) => (
+      {filterByKeyValue(
+        props.directories,
+        "name",
+        props.searchDirectoryTerm
+      ).map((item: Directory, index: number) => (
         <Link
           key={item._id}
           href={`/knowledge/${item._id}/documents`}
@@ -52,7 +60,7 @@ const DirectoryList = (props: Props) => {
             text-xs font-medium  px-2.5 py-0.5
             rounded-full dark:bg-green-900 dark:text-green-300"
             >
-              <p>0</p>
+              <p>{item.documents.length}</p>
             </span>
           </div>
         </Link>

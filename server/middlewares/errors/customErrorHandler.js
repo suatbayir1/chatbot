@@ -26,11 +26,6 @@ const customErrorHandler = (err, req, res, next) => {
     customError = new CustomError(err.message, err.status);
   }
 
-  console.log(err.status);
-  console.log(err.code);
-  console.log(err.message);
-  console.log(err.name);
-
   res.status(customError.status || 500).json({
     success: false,
     message: customError.message,

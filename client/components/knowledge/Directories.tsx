@@ -1,5 +1,5 @@
 /** React */
-import React from "react";
+import React, { useState } from "react";
 
 /** Components */
 import { SearchCreateDirectory, DirectoryList } from "@/components/index";
@@ -12,10 +12,18 @@ type Props = {
 };
 
 const Directories = (props: Props) => {
+  const [searchDirectoryTerm, setSearchDirectoryTerm] = useState<string>("");
+
   return (
     <>
-      <SearchCreateDirectory />
-      <DirectoryList directories={props.directories} />
+      <SearchCreateDirectory
+        searchDirectoryTerm={searchDirectoryTerm}
+        setSearchDirectoryTerm={setSearchDirectoryTerm}
+      />
+      <DirectoryList
+        directories={props.directories}
+        searchDirectoryTerm={searchDirectoryTerm}
+      />
     </>
   );
 };

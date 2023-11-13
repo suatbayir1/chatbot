@@ -15,7 +15,6 @@ const getConversations = asyncErrorWrapper(async (req, res, next) => {
 });
 
 const createConversation = asyncErrorWrapper(async (req, res, next) => {
-  console.log("request");
   const conversation = await Conversation.create(req.body);
   conversation.name = `Conversation #${conversation._id}`;
   conversation.save();

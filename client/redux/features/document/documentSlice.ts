@@ -11,6 +11,9 @@ import { getUrl } from "@/helpers/api";
 import { Dispatch } from "redux";
 import { Document } from "@/types/type";
 
+/** Actions */
+import { getDirectories } from "@/redux/features/knowledge/knowledgeSlice";
+
 export interface DocumentState {
   documents: Document[];
 }
@@ -49,7 +52,6 @@ export const uploadDocument = createAsyncThunk(
     { getState, dispatch }: ReduxType
   ) => {
     try {
-      console.log("store", getState().knowledge.activeDirectory);
       const response = await axios.post(
         getUrl(`document/${getState().knowledge.activeDirectory._id}/upload`),
         params.formData,
@@ -59,6 +61,7 @@ export const uploadDocument = createAsyncThunk(
       );
 
       if (response.status === 200) {
+        dispatch(getDirectories());
         dispatch(getDocuments());
         return response.data.data;
       }

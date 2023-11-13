@@ -11,7 +11,10 @@ import {
 /** Components */
 import { CreateDirectoryDialog } from "@/components/index";
 
-type Props = {};
+type Props = {
+  searchDirectoryTerm: string;
+  setSearchDirectoryTerm: (value: string) => void;
+};
 
 const SearchCreateDirectory = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +35,8 @@ const SearchCreateDirectory = (props: Props) => {
           </div>
           <input
             type="search"
+            value={props.searchDirectoryTerm}
+            onChange={(e) => props.setSearchDirectoryTerm(e.target.value)}
             className="block w-full p-2 pl-10 text-sm text-gray-900 
             border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 
             focus:border-blue-500 focus:outline-none"

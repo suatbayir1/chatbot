@@ -6,7 +6,7 @@ const Directory = require("../models/Directory");
 
 /** Functions */
 const getDirectories = asyncErrorWrapper(async (req, res, next) => {
-  const directories = await Directory.find().sort({ updatedAt: "desc" });
+  const directories = await Directory.find();
 
   return res.status(200).json({
     data: directories,

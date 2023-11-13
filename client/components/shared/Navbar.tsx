@@ -90,7 +90,6 @@ const Navbar = (props: Props) => {
                             key={item.name}
                             href={item.href}
                             onClick={() => {
-                              console.log(item.name);
                               dispatch(setActivePage(item.name));
                             }}
                             className={classNames(

@@ -68,7 +68,6 @@ export const conversationSlicer = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getConversations.fulfilled, (state, action) => {
-      console.log("reducer state", action.payload);
       state.conversations = action.payload;
     });
   },

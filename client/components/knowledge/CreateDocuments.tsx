@@ -77,14 +77,12 @@ const CreateDocuments = (props: Props) => {
 
   const onUploadProgress = (event: any) => {
     const percentCompleted = Math.round((event.loaded * 100) / event.total);
-    console.log("onUploadProgress", percentCompleted);
     setUploadProgress(percentCompleted);
   };
 
   const onChangeFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
-      console.log("file");
 
       const formData: FormData = new FormData();
       formData.append("file", e.target.files[0]);

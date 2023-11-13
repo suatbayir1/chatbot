@@ -70,7 +70,6 @@ export const knowledgeSlicer = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getDirectories.fulfilled, (state, action) => {
-      console.log("reducer state", action.payload);
       state.directories = action.payload;
     });
   },

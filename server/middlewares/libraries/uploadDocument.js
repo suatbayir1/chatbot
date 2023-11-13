@@ -26,8 +26,6 @@ const fileFilter = (req, file, cb) => {
     "application/pdf",
   ];
 
-  console.log(file);
-
   if (!allowedMimeTypes.includes(file.mimetype)) {
     return cb(new CustomError("Please provide a valid file", 400), false);
   }

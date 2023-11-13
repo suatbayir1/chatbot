@@ -12,6 +12,13 @@ const DirectorySchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    documents: [
+      {
+        type: mongoose.Schema.ObjectId,
+        default: [],
+        ref: "Document",
+      },
+    ],
     updatedAt: {
       type: Date,
       default: Date.now,

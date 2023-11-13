@@ -15,7 +15,6 @@ type Props = {
 };
 
 const UploadDocumentForm = (props: Props) => {
-  console.log(props.file);
   return (
     <div>
       <div

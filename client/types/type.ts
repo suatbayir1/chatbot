@@ -1,6 +1,7 @@
 export type Directory = {
   _id: string;
   name: string;
+  documents: Array<string>;
   createdAt: Date;
   updatedAt: Date;
 };
