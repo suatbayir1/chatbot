@@ -28,8 +28,11 @@ import { setActiveConversation } from "@/redux/features/conversation/conversatio
 
 /** Helpers */
 import { classNames } from "@/helpers/style";
+import { filterByKeyValue } from "@/helpers/filter";
 
-type Props = {};
+type Props = {
+  searchConversationTerm: string;
+};
 
 const ConversationList = (props: Props) => {
   /** Hooks */
@@ -50,7 +53,11 @@ const ConversationList = (props: Props) => {
 
       <div className="w-full max-w-md px-4 my-2">
         <ul>
-          {conversations.map((item, idx) => (
+          {filterByKeyValue(
+            conversations,
+            "name",
+            props.searchConversationTerm
+          ).map((item, idx) => (
             <li key={idx}>
               <div
                 className={classNames(

@@ -11,14 +11,17 @@ import {
 
 /** Redux */
 import { useDispatch } from "react-redux";
-import type { RootState, AppDispatch } from "@/redux/store";
+import type { AppDispatch } from "@/redux/store";
 import {
   createConversation,
   setActiveConversation,
 } from "@/redux/features/conversation/conversationSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 
-type Props = {};
+type Props = {
+  searchConversationTerm: string;
+  setSearchConversationTerm: (searchConversationTerm: string) => void;
+};
 
 const SearchCreateConversation = (props: Props) => {
   /** Hooks */
@@ -34,6 +37,8 @@ const SearchCreateConversation = (props: Props) => {
           </div>
           <input
             type="search"
+            value={props.searchConversationTerm}
+            onChange={(e) => props.setSearchConversationTerm(e.target.value)}
             className="block w-full p-2 pl-10 text-sm text-gray-900 
             border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 
             focus:border-blue-500 focus:outline-none"
