@@ -35,3 +35,8 @@ pids/
 # Dependency lock files
 package-lock.json
 yarn.lock
+
+ai/aimodels/embeddings
+/home/mert/Desktop/cpp/langchain/chatbot/ai/aimodels/embeddings
+chatbot/ai/aimodels/embeddings
+__pycache__/
