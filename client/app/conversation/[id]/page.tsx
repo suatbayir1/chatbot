@@ -1,6 +1,10 @@
 "use client";
 /** React */
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { io } from "socket.io-client";
+
+/** Types */
+import { ChatHistoryType } from "@/types/type";
 
 /** Components */
 import {

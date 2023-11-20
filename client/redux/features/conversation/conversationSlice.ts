@@ -1,5 +1,5 @@
 /** Types */
-import { Conversation } from "@/types/type";
+import { ChatHistoryType, Conversation } from "@/types/type";
 import { Dispatch } from "redux";
 
 /** Helpers */
@@ -9,19 +9,21 @@ import axios from "axios";
 /** Redux */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export interface ConversationState {
-  activeConversation: Conversation;
-  conversations: Conversation[];
-}
-
 export interface ReduxType {
   getState: any;
   dispatch: Dispatch<any>;
 }
 
+export interface ConversationState {
+  activeConversation: Conversation;
+  conversations: Conversation[];
+  chatHistory: ChatHistoryType[];
+}
+
 const initialState: ConversationState = {
   activeConversation: <Conversation>{},
   conversations: [],
+  chatHistory: [],
 };
 
 export const getConversations = createAsyncThunk(
@@ -65,6 +67,9 @@ export const conversationSlicer = createSlice({
     setActiveConversation: (state, action) => {
       state.activeConversation = action.payload;
     },
+    setChatHistory: (state, action) => {
+      state.chatHistory.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getConversations.fulfilled, (state, action) => {
@@ -73,6 +78,7 @@ export const conversationSlicer = createSlice({
   },
 });
 
-export const { setActiveConversation } = conversationSlicer.actions;
+export const { setActiveConversation, setChatHistory } =
+  conversationSlicer.actions;
 
 export default conversationSlicer.reducer;

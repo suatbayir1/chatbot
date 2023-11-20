@@ -22,3 +22,9 @@ export type Document = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ChatHistoryType = {
+  text: string;
+  type: "question" | "answer";
+  createdAt: Date;
+};

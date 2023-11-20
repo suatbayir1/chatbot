@@ -10,7 +10,7 @@ from langchain.callbacks.base import AsyncCallbackHandler
 from langchain.callbacks.manager import AsyncCallbackManager
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
-from langchain.llms import LlamaCpp
+from langchain.llms import LlamaCpp, Ollama
 from langchain.vectorstores import FAISS
 from huggingface_hub import hf_hub_download
 from langchain.callbacks.manager import CallbackManager
@@ -18,7 +18,6 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.embeddings import GPT4AllEmbeddings, TensorflowHubEmbeddings
 
 from langchain.chains.chat_vector_db.prompts import CONDENSE_QUESTION_PROMPT, QA_PROMPT
-from langchain.chains.llm import LLMChain
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import (
     ChatPromptTemplate,
@@ -45,22 +44,13 @@ class LangchainModel():
         manager = AsyncCallbackManager([])
         stream_manager = AsyncCallbackManager([stream_handler])
 
-        model_name_or_path = "TheBloke/Mistral-7B-v0.1-GGUF"
-        model_basename = "mistral-7b-v0.1.Q4_K_M.gguf" # the model is in bin format
-
-        model_path = hf_hub_download(repo_id=model_name_or_path, filename=model_basename)
-
-        n_batch = 256  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
-
-        # Loading model,
-        llm = LlamaCpp(
-            model_path=model_path,
-            max_tokens=256,
-            n_batch=n_batch,
-            callback_manager=stream_manager,
-            n_ctx=2048,
-            verbose=False,
+        llm = Ollama(
+        base_url="http://localhost:11434",
+        model="mistral",
+        verbose=True,
+        callback_manager=stream_manager,
         )
+
 
         memory = ConversationBufferMemory(memory_key="chat_history", input_key='question', output_key='answer', return_messages=True)
 

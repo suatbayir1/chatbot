@@ -8,8 +8,8 @@ authentication = dict(
 )
 
 path = dict(
-    EMBEDDING_MODEL_PATH = "/home/mert/Desktop/cpp/langchain/chatbot/ai/aimodels/embeddings",
-    PDF_PATH = "/home/mert/Desktop/cpp/langchain/chatbot/server/public/uploads",
-    INDEX_PATH = "/home/mert/Desktop/cpp/langchain/chatbot/ai/public/indexdb"
+    EMBEDDING_MODEL_PATH = "/root/llm/chatbot/ai/aimodels/embeddings",
+    PDF_PATH = "/root/llm/chatbot/server/public/uploads",
+    INDEX_PATH = "/root/llm/chatbot/ai/public/indexdb"
 )
 

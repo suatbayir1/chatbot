@@ -1,5 +1,5 @@
 /** Libraries */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Cog6ToothIcon,
   ChatBubbleLeftEllipsisIcon,
@@ -8,11 +8,69 @@ import {
 } from "@heroicons/react/24/outline";
 import { MicrophoneIcon } from "@heroicons/react/24/solid";
 
+/** Redux */
+import { setChatHistory } from "@/redux/features/conversation/conversationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+
 type Props = {};
 
 const ChatQueryInput = (props: Props) => {
+  /** Hooks */
+  const dispatch = useDispatch();
+  const { chatHistory } = useSelector((state: RootState) => state.conversation);
+  const [websckt, setWebsckt] = useState<WebSocket>();
+
   const maxLength = 5000;
   const [question, setQuestion] = useState<string>("");
+
+  useEffect(() => {
+    const url = "ws://127.0.0.1:8000/chat/wstest";
+    const ws = new WebSocket(url);
+
+    ws.onopen = (event) => {
+      ws.send("Connect");
+    };
+
+    // recieve message every start page
+    ws.onmessage = (e) => {
+      const message = JSON.parse(e.data);
+      console.log(message);
+      // setMessages([...messages, message]);
+    };
+
+    setWebsckt(ws);
+    //clean up function when we close page
+    return () => ws.close();
+  }, []);
+
+  const askQuestion = (question: string): void => {
+    dispatch(
+      setChatHistory({
+        text: question,
+        type: "question",
+        createdAt: Date.now(),
+      })
+    );
+
+    setQuestion("");
+
+    websckt!.send(question);
+    let message: string = "";
+    let source: string = "";
+    websckt!.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+
+      if (data.sender === "bot" && data.type === "stream") {
+        message += data.message + " ";
+      } else if (data.sender === "bot" && data.type === "end") {
+        console.log("end", message);
+
+        source = data.message;
+      }
+      console.log(message);
+    };
+  };
 
   return (
     <div className="absolute w-full bottom-0 left-0 px-4 md:px-6 pb-6 pt-0.5 bg-white">
@@ -85,6 +143,7 @@ const ChatQueryInput = (props: Props) => {
                 enabled:hover:text-blue-400 disabled:cursor-not-allowed text-slate-400"
                 aria-label="Send message"
                 disabled={question.trim() ? false : true}
+                onClick={() => askQuestion(question)}
               >
                 <PaperAirplaneIcon className="h-6 w-6" aria-hidden="true" />
               </button>

@@ -36,15 +36,18 @@ class FileModel():
          return self.db.update_one(self.collection, values, where)
 
 
+    def split_docs(self, documents, chunk_size=1000, chunk_overlap=20):
+        text_splitter=RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        docs=text_splitter.split_documents(documents)
+        return docs
+
+
     def createIndexFromPDF(self, pdfname):
         loader = PyPDFLoader(secret.path["PDF_PATH"] + "/" + pdfname)
         data = loader.load()
-        text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        docs=text_splitter.split_documents(data)
-        tf = TensorflowHubEmbeddings(model_url= secret.path["EMBEDDING_MODEL_PATH"])
-        vectorstore = FAISS.from_documents(docs, tf)
-        vectorfile_name = secret.path["INDEX_PATH"] + "/" + os.path.splitext(pdfname.replace(" ", "-"))[0]
-        vectorstore.save_local(vectorfile_name)
+        docs = self.split_docs(data)
+
+        self.saveIndex(docs, pdfname)
 
         newValues = {
             "status": "INDEXED",
@@ -53,3 +56,10 @@ class FileModel():
         }
 
         return newValues
+    
+
+    def saveIndex(self, document, pdfname):
+        tf = TensorflowHubEmbeddings(model_url= secret.path["EMBEDDING_MODEL_PATH"])
+        vectorstore = FAISS.from_documents(document, tf)
+        vectorfile_name = secret.path["INDEX_PATH"] + "/" + os.path.splitext(pdfname.replace(" ", "-"))[0]
+        vectorstore.save_local(vectorfile_name)
